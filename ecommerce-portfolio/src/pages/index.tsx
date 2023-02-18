@@ -1,9 +1,11 @@
 import Head from 'next/head'
-import { Heading, Button, Box } from '@chakra-ui/react'
+import { Grid, GridItem } from '@chakra-ui/react'
 import { GetServerSidePropsContext } from 'next';
+import Image from "next/image"
 
 import { TopBar } from '@/components/TopBar';
 import { Header } from '@/components/Header';
+import { slugify } from '@/utils/sluglify';
 
 type Product = {
   id: number;
@@ -17,11 +19,15 @@ type Product = {
     rate: number;
   };
 }
+
+type Categories = "electronics" | "jewelery" | "men's clothing" | "wonmen's clothing";
+
 type Props = {
-  products: Product[]
+  products: Product[],
+  categories: Categories[]
 }
 
-export default function Home({ products }: Props) {
+export default function Home({ products, categories }: Props) {
   return (
     <>
       <Head>
@@ -31,9 +37,23 @@ export default function Home({ products }: Props) {
         <link rel="icon" href="/logo.svg" />
       </Head>
       <main>
-        <TopBar></TopBar>
-        <Header></Header>
-        <Button>Button</Button>
+        <TopBar/>
+        <Header/>
+
+        <Grid templateColumns='540px 255px 255px' gap="1rem" templateRows='200px 260px'>
+          {categories.map((cat, key)=>{
+            const slug = slugify(cat)
+            const imageUrl = `/pic-categories-${slug}.jpg`
+            if(key === 0){
+              return <GridItem position="relative" w='100%' h='100%' rowSpan={2} bg='blue.500'><Image src={imageUrl} alt='' fill={true} /></GridItem>
+            }
+            if(key === categories.length-1){
+              return <GridItem position="relative" w='100%' h='100%' bg='blue.500' colSpan={2}><Image src={imageUrl} alt='' fill={true} /></GridItem>
+            }
+            return <GridItem position="relative" w='100%' h='100%' bg='blue.500'><Image src={imageUrl} alt='' fill={true} /></GridItem>
+          })}
+        </Grid>
+
         <ol>
           {products.map(product => {
             return <li key={product.id}>{product.title}</li>
@@ -48,10 +68,14 @@ export async function getServerSideProps(context: GetServerSidePropsContext){
   
   const products = await fetch('https://fakestoreapi.com/products')
     .then(res=>res.json())
+
+  const categories = await fetch('https://fakestoreapi.com/products/categories')
+    .then(res=>res.json())
   
   return{
     props: {
-      products
+      products,
+      categories
     }
   }
 }

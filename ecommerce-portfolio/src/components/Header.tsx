@@ -1,11 +1,14 @@
 import Link from "next/link"
 import Image from "next/image"
+import { Box, Flex } from "@chakra-ui/react"
 
 export function Header(){
-    return (<header>
+    return (<Flex w='100%' as='header' justifyContent={'space-between'} alignItems='center' border='solid 2px' borderColor='gray.100'>
+        <Box margin='1rem 0'>
         <Image src="/next.svg" alt="" width={100} height={48} />
+        </Box>
         <nav>
-          <ul>
+          <Flex as='ul' listStyleType='none' gap='2rem'>
             <li><Link href="#">About Us</Link></li>
             <li><Link href="#">Woman</Link></li>
             <li><Link href="#">Men</Link></li>
@@ -13,11 +16,11 @@ export function Header(){
             <li><Link href="#">Accesories</Link></li>
             <li><Link href="#">Blog</Link></li>
             <li><Link href="#">Contact</Link></li>
-          </ul>
+          </Flex>
         </nav>
 
         <div className='commerce-menu'>
-          <ul>
+          <Flex as='ul' listStyleType='none' gap='1.5rem'>
             <li>
               <Link href="#"><Image src="/ico-search.svg" alt='' width="24" height="24" /></Link>
             </li>
@@ -30,7 +33,7 @@ export function Header(){
             <li>
               <Link href="#"><Image src="/ico-bag.svg" alt='' width="24" height="24" /></Link>
             </li>
-          </ul>
+          </Flex>
         </div>
-      </header>)
+      </Flex>)
 }
