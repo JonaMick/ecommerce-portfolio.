@@ -5,9 +5,12 @@ import { TopBar } from '@/components/TopBar';
 import { Header } from '@/components/Header';
 import { HomeHeroCategories } from '@/components/HomeHeroCategories';
 
+import { Box, Container, Flex } from '@chakra-ui/react'
+
 import * as React from 'react';
 
 import { Categories } from '@/models/Categories';
+import { AdvantageItem } from '@/components/AdvantageItem';
 
 type Product = {
   id: number;
@@ -36,12 +39,20 @@ export default function Home({ products, categories }: Props) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/logo.svg" />
       </Head>
-      <main>
-        <TopBar />
+      <TopBar />
+      <Box marginBottom="2rem">
         <Header />
+      </Box>
+      <main>
+        <Container size="lg">
+          <HomeHeroCategories categories={categories}></HomeHeroCategories>
 
-        <HomeHeroCategories categories={categories}></HomeHeroCategories>
-
+          <Flex justifyContent="space-between" margin="2rem 0">
+            <AdvantageItem title="Free Shipping" content="On all UA order or order above $100" icon="/ico-truck.svg"></AdvantageItem>
+            <AdvantageItem title="30 days return" content="Simply return it within 30 days for an exchange" icon="/ico-return.svg"></AdvantageItem>
+            <AdvantageItem title="Support 24/7" content="Contact us 24 hours a day, 7 days a week" icon="/ico-support.svg"></AdvantageItem>
+          </Flex>
+        </Container>
         <ol>
           {products.map(product => {
             return <li key={product.id}>{product.title}</li>

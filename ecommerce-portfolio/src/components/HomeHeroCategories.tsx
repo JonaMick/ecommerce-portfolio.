@@ -12,7 +12,7 @@ type Props = {
 }
 
 export function HomeHeroCategories({ categories }: Props) {
-    return (<Grid templateColumns='540px 255px 255px' gap="1rem" templateRows='200px 260px'>
+    return (<Grid templateColumns='540px 255px 255px' gap="30px" templateRows='200px 260px'>
       {categories.map((cat, key) => {
         const slug = slugify(cat);
         const imageUrl = `/pic-categories-${slug}.jpg`;
