@@ -5,12 +5,12 @@ import { TopBar } from '@/components/TopBar';
 import { Header } from '@/components/Header';
 import { HomeHeroCategories } from '@/components/HomeHeroCategories';
 
-import { Box, Container, Flex } from '@chakra-ui/react'
+import { AspectRatio, Box, Container, Flex, Image, Text } from '@chakra-ui/react'
 
 import * as React from 'react';
 
 import { Categories } from '@/models/Categories';
-import { AdvantageItem } from '@/components/AdvantageItem';
+import { AdvantageSection } from '@/components/AdvantageSection';
 
 type Product = {
   id: number;
@@ -46,13 +46,15 @@ export default function Home({ products, categories }: Props) {
       <main>
         <Container size="lg">
           <HomeHeroCategories categories={categories}></HomeHeroCategories>
-
-          <Flex justifyContent="space-between" margin="2rem 0">
-            <AdvantageItem title="Free Shipping" content="On all UA order or order above $100" icon="/ico-truck.svg"></AdvantageItem>
-            <AdvantageItem title="30 days return" content="Simply return it within 30 days for an exchange" icon="/ico-return.svg"></AdvantageItem>
-            <AdvantageItem title="Support 24/7" content="Contact us 24 hours a day, 7 days a week" icon="/ico-support.svg"></AdvantageItem>
-          </Flex>
+          <AdvantageSection />
         </Container>
+        <Box margin="2rem 0" width="255px" borderColor="gray.200">
+          <AspectRatio position="relative" ratio="1" maxWidth="100%">
+            <Image src="https://fakestoreapi.com/img/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_.jpg" alt="" width="200" fill="true" style={{ objectFit: "contain" }} />
+          </AspectRatio>
+          <Text>Name</Text>
+          <Text>Price</Text>
+        </Box>
         <ol>
           {products.map(product => {
             return <li key={product.id}>{product.title}</li>
