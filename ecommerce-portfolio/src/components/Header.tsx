@@ -35,9 +35,11 @@ const menu = [
 ]
 export function Header(){
   return (<Box w='100%' as='header' border='solid 2px' borderColor='gray.100'>
-    <Container as={Flex} justifyContent={'space-between'} alignItems='center' size="lg">
+    <Container as={Flex} justifyContent={'space-between'} alignItems='center' size={{
+      lg: 'lg'
+    }}>
       <Flex gap='0.5rem' margin='1rem 0'>
-        <Show below="sm">
+        <Show below="lg">
           <Box as='nav'>
             <Menu>
               <MenuButton
@@ -53,21 +55,21 @@ export function Header(){
                     <Link href={item.href}>{item.title}</Link>
                   </MenuItem>
                   })
-                };
+                }
               </MenuList>
             </Menu>
           </Box>
         </Show>
         <Image src="/next.svg" alt="" width={100} height={48} />
       </Flex>
-      <Show above="sm">
+      <Show above="lg">
         <Box as="nav">
           <Flex as='ul' listStyleType='none' gap='2rem' display={{base: 'none', sm: 'flex'}}>
             {
               menu.map((item, index)=>{
                 return <li key={index} ><Link href={item.href}>{item.title}</Link></li>
                 })
-              };
+              }
           </Flex>
         </Box>
       </Show>

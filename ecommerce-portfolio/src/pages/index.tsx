@@ -5,14 +5,15 @@ import { TopBar } from '@/components/TopBar';
 import { Header } from '@/components/Header';
 import { HomeHeroCategories } from '@/components/HomeHeroCategories';
 
-import { AspectRatio, Box, Container, Flex, Image, Text } from '@chakra-ui/react'
+import { Box, Container, SimpleGrid } from '@chakra-ui/react'
 
 import * as React from 'react';
 
 import { Categories } from '@/models/Categories';
 import { AdvantageSection } from '@/components/AdvantageSection';
+import { ProductCard } from '@/components/ProductCard';
 
-type Product = {
+export type Product = {
   id: number;
   title: string;
   price: number;
@@ -30,6 +31,7 @@ type Props = {
   categories: Categories[]
 }
 
+
 export default function Home({ products, categories }: Props) {
   return (
     <>
@@ -44,22 +46,19 @@ export default function Home({ products, categories }: Props) {
         <Header />
       </Box>
       <main>
-        <Container size="lg">
+        <Container size={{
+          lg: 'lg'
+        }}>
           <HomeHeroCategories categories={categories}></HomeHeroCategories>
           <AdvantageSection />
+        
+          <SimpleGrid minChildWidth= '255px' spacing='1.85rem'>
+            {products.map(product => {
+              return<ProductCard  {...product} key={ product.id } />
+            })}
+          </SimpleGrid>
         </Container>
-        <Box margin="2rem 0" width="255px" borderColor="gray.200">
-          <AspectRatio position="relative" ratio="1" maxWidth="100%">
-            <Image src="https://fakestoreapi.com/img/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_.jpg" alt="" width="200" fill="true" style={{ objectFit: "contain" }} />
-          </AspectRatio>
-          <Text>Name</Text>
-          <Text>Price</Text>
-        </Box>
-        <ol>
-          {products.map(product => {
-            return <li key={product.id}>{product.title}</li>
-          })}
-        </ol>
+        
       </main>
     </>
   )
