@@ -5,13 +5,14 @@ import { TopBar } from '@/components/TopBar';
 import { Header } from '@/components/Header';
 import { HomeHeroCategories } from '@/components/HomeHeroCategories';
 
-import { Box, Container, SimpleGrid } from '@chakra-ui/react'
+import { Box, Container, Grid, SimpleGrid } from '@chakra-ui/react'
 
 import * as React from 'react';
 
 import { Categories } from '@/models/Categories';
 import { AdvantageSection } from '@/components/AdvantageSection';
-import { ProductCard } from '@/components/ProductCard';
+import { groupProductByCategory, GroupedProducts } from '@/utils/groupProductByCategory';
+import { HomeProductsGrid } from '@/components/HomeProductsGrid';
 
 export type Product = {
   id: number;
@@ -28,7 +29,8 @@ export type Product = {
 
 type Props = {
   products: Product[],
-  categories: Categories[]
+  categories: Categories[],
+  productsGroupedByCategory: GroupedProducts;
 }
 
 
@@ -51,22 +53,17 @@ export default function Home({ products, categories }: Props) {
         }}>
           <HomeHeroCategories categories={categories}></HomeHeroCategories>
           <AdvantageSection />
-        
-          {<SimpleGrid minChildWidth= {{
-            lg: '255px'
-          }}
-            overflow={"scroll"}
-            gridTemplateColumns="repeat(auto-fit, 255px)"
-            gridAutoFlow={"column"}
-            gridAutoColumns={"255px"}
-            spacing='1.85rem'
-            scrollSnapType="x mandatory">
-            {products.map(product => {
-              return<Box key={ product.id } scrollSnapAlign="center"><ProductCard  {...product} /></Box>
-            })}
-          </SimpleGrid>}
         </Container>
         
+        <Container 
+          maxW={{
+            base: "100%",
+            md: "1110px"
+          }}
+          paddingX="0"
+        >
+        <HomeProductsGrid products={products}></HomeProductsGrid>
+        </Container>
       </main>
     </>
   )
@@ -79,6 +76,9 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
   const categories = await fetch('https://fakestoreapi.com/products/categories')
     .then(res => res.json())
+
+  const productsGroupedByCategory = groupProductByCategory(products);
+
 
   return {
     props: {
