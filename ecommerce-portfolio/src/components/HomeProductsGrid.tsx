@@ -20,7 +20,10 @@ export function HomeProductsGrid(props: Props){
       alignItems="stretch"
       gridAutoColumns="255px"
       gridAutoRows="1fr"
-      overflowX="scroll"
+      overflowX={{
+        base: "scroll",
+        md: "auto"
+      }}
       gap="1.85rem"
       scrollSnapType="x mandatory">
       {props.products.map((product, i) => {

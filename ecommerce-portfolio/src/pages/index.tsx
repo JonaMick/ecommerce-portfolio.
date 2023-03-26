@@ -1,11 +1,13 @@
 import Head from 'next/head'
+import Image from "next/image"
+
 import { GetServerSidePropsContext } from 'next';
 
 import { TopBar } from '@/components/TopBar';
 import { Header } from '@/components/Header';
 import { HomeHeroCategories } from '@/components/HomeHeroCategories';
 
-import { Box, Container, Grid, SimpleGrid } from '@chakra-ui/react'
+import { Box, Container, Grid, Heading, SimpleGrid } from '@chakra-ui/react'
 
 import * as React from 'react';
 
@@ -13,6 +15,9 @@ import { Categories } from '@/models/Categories';
 import { AdvantageSection } from '@/components/AdvantageSection';
 import { groupProductByCategory, GroupedProducts } from '@/utils/groupProductByCategory';
 import { HomeProductsGrid } from '@/components/HomeProductsGrid';
+
+import bannerNewSeason from '/public/banner-new-season.jpg';
+import bannerSale from '/public/banner-sale.jpg';
 
 export type Product = {
   id: number;
@@ -28,13 +33,12 @@ export type Product = {
 }
 
 type Props = {
-  products: Product[],
   categories: Categories[],
   productsGroupedByCategory: GroupedProducts;
 }
 
 
-export default function Home({ products, categories }: Props) {
+export default function Home({ categories, productsGroupedByCategory }: Props) {
   return (
     <>
       <Head>
@@ -62,7 +66,38 @@ export default function Home({ products, categories }: Props) {
           }}
           paddingX="0"
         >
-        <HomeProductsGrid products={products}></HomeProductsGrid>
+        {Object.entries(productsGroupedByCategory).map(([category, products]) => {
+          return (
+            <Box key={ category } marginBottom="4rem">
+              <Heading 
+                as="h2"
+                size="md"
+                textTransform="uppercase"
+                margin={{
+                  base: '0 0 1rem 1rem',
+                  md: '0 0 2rem'
+                }}>
+                {category}
+              </Heading>
+              <HomeProductsGrid products={products} />
+            </Box>
+          );
+          })}
+        </Container>
+
+        <Container size={{
+          lg: 'lg'
+        }}>
+          <SimpleGrid 
+            minChildWidth="255px"
+            spacing={{
+              base: '1rem',
+              md: '2rem',
+            }}
+          >
+            <Image src={bannerNewSeason} alt="" />
+            <Image src={bannerSale} alt="" />
+          </SimpleGrid>
         </Container>
       </main>
     </>
@@ -72,10 +107,10 @@ export default function Home({ products, categories }: Props) {
 export async function getServerSideProps(context: GetServerSidePropsContext) {
 
   const products = await fetch('https://fakestoreapi.com/products')
-    .then(res => res.json())
+    .then(res => res.json());
 
   const categories = await fetch('https://fakestoreapi.com/products/categories')
-    .then(res => res.json())
+    .then(res => res.json());
 
   const productsGroupedByCategory = groupProductByCategory(products);
 
@@ -83,7 +118,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   return {
     props: {
       products,
-      categories
-    }
-  }
+      categories,
+      productsGroupedByCategory,
+    },
+  };
 }
