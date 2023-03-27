@@ -19,6 +19,7 @@ import { HomeProductsGrid } from '@/components/HomeProductsGrid';
 import bannerNewSeason from '/public/banner-new-season.jpg';
 import bannerSale from '/public/banner-sale.jpg';
 import { CenteredLabel } from '@/components/CenteredLabel';
+import { PromoBanner } from '@/components/PromoBanner';
 
 export type Product = {
   id: number;
@@ -59,63 +60,53 @@ export default function Home({ categories, productsGroupedByCategory }: Props) {
           <HomeHeroCategories categories={categories}></HomeHeroCategories>
           <AdvantageSection />
         </Container>
-        
-        <Container 
+
+        <Container
           maxW={{
             base: "100%",
             md: "1110px"
           }}
           paddingX="0"
         >
-        {Object.entries(productsGroupedByCategory).map(([category, products]) => {
-          return (
-            <Box key={ category } marginBottom="4rem">
-              <Heading 
-                as="h2"
-                size="md"
-                textTransform="uppercase"
-                margin={{
-                  base: '0 0 1rem 1rem',
-                  md: '0 0 2rem'
-                }}>
-                {category}
-              </Heading>
-              <HomeProductsGrid products={products} />
-            </Box>
-          );
+          {Object.entries(productsGroupedByCategory).map(([category, products]) => {
+            return (
+              <Box key={category} marginBottom="4rem">
+                <Heading
+                  as="h2"
+                  size="md"
+                  textTransform="uppercase"
+                  margin={{
+                    base: '0 0 1rem 1rem',
+                    md: '0 0 2rem'
+                  }}>
+                  {category}
+                </Heading>
+                <HomeProductsGrid products={products} />
+              </Box>
+            );
           })}
         </Container>
 
         <Container size={{
           lg: 'lg'
         }}>
-          <SimpleGrid 
+          <SimpleGrid
             minChildWidth="255px"
             spacing={{
               base: '1rem',
               md: '2rem',
             }}
           >
-            <Box position={"relative"}>
-              <Image src={bannerNewSeason} alt="" />
-              <Box position="absolute" left="50%" top="50%" transform="translate(-50%, -50%)">
-                <CenteredLabel>
-                  <Text fontSize="sm" color="gray.500">New Season</Text>
-                  <Text fontSize="lg" fontWeight="bold" whiteSpace="nowrap">Lookbook collection</Text>
-                </CenteredLabel>
-              </Box>
-            </Box>
-            <Box position={"relative"}>
-              <Image src={bannerSale} alt="" />
-              <Box position="absolute" left="50%" top="50%" transform="translate(-50%, -50%)">
-                <CenteredLabel>
-                  <Text fontSize="sm" color="gray.500">Sale</Text>
-                  <Text fontSize="lg" fontWeight="bold" whiteSpace="nowrap">Get up to {''}
-                    <Text as="span" color="red">50% off</Text>
-                  </Text>
-                </CenteredLabel>
-              </Box>
-            </Box>
+            <PromoBanner image={bannerNewSeason}>
+              <Text fontSize="sm" color="gray.500">New Season</Text>
+              <Text fontSize="lg" fontWeight="bold" whiteSpace="nowrap">Lookbook collection</Text>
+            </PromoBanner>
+            <PromoBanner image={bannerSale}>
+            <Text fontSize="sm" color="gray.500">Sale</Text>
+              <Text fontSize="lg" fontWeight="bold" whiteSpace="nowrap">Get up to {''}
+                <Text as="span" color="red">50% off</Text>
+              </Text>
+            </PromoBanner>
           </SimpleGrid>
         </Container>
       </main>
