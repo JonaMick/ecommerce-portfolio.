@@ -4,28 +4,45 @@ import { ChakraProvider } from '@chakra-ui/react'
 
 import { extendTheme } from '@chakra-ui/react'
 
-import { defineStyle, defineStyleConfig } from '@chakra-ui/react'
+import { defineStyleConfig } from '@chakra-ui/react'
 
-// define custom sizes
-const sizes = {
-  lg: defineStyle({
-    maxW: '1110px',
-    p: 0,
-  }),
-}
-
-// export the component theme
-export const containerTheme = defineStyleConfig({ sizes })
 
 export const buttonTheme = defineStyleConfig({
   baseStyle:{
-    fontWeight: 'bold',
+    fontWeight: 'normal',
     textTransform: 'uppercase',
-    borderRadius: 'none'
+    borderRadius: 'none',
+    paddingX: '1.5rem',
+    _hover:{
+      backgroundColor: 'brand.800',
+    }
+  },
+  sizes:{
+    sm:{
+      fontsize: '0.6667rem',
+    },
+    md:{
+      fontsize: '0.7222rem',
+    },
+    lg:{
+      fontsize: '0.7222rem',
+    },
+    xl:{
+      fontsize: '1rem',
+      height: '3.5556rem',
+      paddingX: '3rem',
+    },
   },
   defaultProps: {
-    colorScheme: 'brand',
+    variant: 'primary',
+    size: 'sm',
   },
+  variants:{
+    primary:{
+      backgroundColor: 'brand.900',
+      color: 'white',
+    }
+  }
 })
 
 import '@fontsource/spartan/400.css'
@@ -53,7 +70,11 @@ const theme = extendTheme({
   },
   components: {
     Button: buttonTheme,
-    Container: containerTheme
+    Container: {
+      baseStyle:{
+        maxW: '71.375rem',
+      }
+    }
   }
 })
 

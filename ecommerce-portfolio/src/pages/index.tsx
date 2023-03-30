@@ -7,7 +7,7 @@ import { TopBar } from '@/components/TopBar';
 import { Header } from '@/components/Header';
 import { HomeHeroCategories } from '@/components/HomeHeroCategories';
 
-import { Box, Button, Container, FormControl, FormHelperText, FormLabel, Grid, Heading, Input, SimpleGrid, Text } from '@chakra-ui/react'
+import { Box, Button, Container, Flex, FormControl, FormHelperText, FormLabel, Grid, Heading, Input, SimpleGrid, Text } from '@chakra-ui/react'
 
 import * as React from 'react';
 
@@ -20,6 +20,9 @@ import bannerNewSeason from '/public/banner-new-season.jpg';
 import bannerSale from '/public/banner-sale.jpg';
 import { CenteredLabel } from '@/components/CenteredLabel';
 import { PromoBanner } from '@/components/PromoBanner';
+
+import womenStanding from 'public/woman-standing.png';
+import menWalking from 'public/men-walking.png';
 
 export type Product = {
   id: number;
@@ -54,9 +57,7 @@ export default function Home({ categories, productsGroupedByCategory }: Props) {
         <Header />
       </Box>
       <main>
-        <Container size={{
-          lg: 'lg'
-        }}>
+        <Container>
           <HomeHeroCategories categories={categories}></HomeHeroCategories>
           <AdvantageSection />
         </Container>
@@ -87,9 +88,7 @@ export default function Home({ categories, productsGroupedByCategory }: Props) {
           })}
         </Container>
 
-        <Container size={{
-          lg: 'lg'
-        }}>
+        <Container >
           <SimpleGrid
             minChildWidth="255px"
             spacing={{
@@ -110,8 +109,81 @@ export default function Home({ categories, productsGroupedByCategory }: Props) {
           </SimpleGrid>
         </Container>
 
-        <Container background={'linear-gradient(180deg, #F3F2F2 0, #DCDBDB 100%);'} m="2rem 0" p="1.5rem" maxW="100%">
-          <Box maxW='33rem' m="auto" as="article" bgColor="white" p="2rem">
+        <Container 
+         background={'linear-gradient(180deg, #F3F2F2 0, #DCDBDB 100%);'} 
+          m={{
+            base: '14.75rem 0 0',
+            md: '2rem auto'
+          }} 
+          p={{
+            base: '1.5rem',
+            md: "3.55rem" ,
+          }}
+          maxW="100%"
+          position={'relative'}
+        >
+          <Box position={'absolute'} 
+            width={{
+              base: '128px',
+              md: '311px',
+            }}
+            height={{
+              base: '242px',
+              md: '545px',
+            }}
+            left={{
+              base: '1.5rem',
+              md: '50%',
+            }}
+            top={{
+              base: 'calc(-242px + 1.5rem)',
+              md: 'initial',
+            }}
+            bottom={{
+              md: '0',
+            }}
+            transform={{
+              md: 'translateX(-530px)'
+            }}
+            >
+            <Image src={womenStanding} alt="" fill={true} style={{ objectFit: 'cover' }} />
+          </Box>
+          <Box position={'absolute'} 
+            width={{
+              base: '99px',
+              md: '219px',
+            }} 
+            height={{
+              base: '236px',
+              md: '524px',
+            }}
+            top={{
+              base: 'calc(-236px + 1.5rem)',
+              md: 'initial',
+            }}
+            bottom={{
+              md: '0',
+            }}
+            right={{
+              base: '2rem',
+              md: '50%',
+            }}
+            transform={{
+              md: 'translateX(470px)',
+            }}
+          >
+            <Image src={menWalking} alt="" fill={true} style={{ objectFit: 'cover' }} />
+          </Box>
+          <Flex 
+            height={{
+              md: '28.75rem',
+            }}
+            maxW='33rem'
+            m="auto"
+            as="article"
+            bgColor="white"
+            p="2rem"
+          >
             <Grid gap="2rem" maxW="22rem" m="auto" textAlign="center" >
               <header>
                 <Heading size="sm" textTransform="uppercase" color="gray">Special Offer</Heading>
@@ -126,7 +198,7 @@ export default function Home({ categories, productsGroupedByCategory }: Props) {
                 <Button bgColor="black" w="100%" size={'lg'}>Subscribe</Button>
               </Grid>
             </Grid>
-          </Box>
+          </Flex>
         </Container>
       </main>
     </>
