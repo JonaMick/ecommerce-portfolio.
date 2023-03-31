@@ -1,12 +1,32 @@
 import { slugify } from "@/utils/sluglify";
+import { AspectRatio } from "@chakra-ui/react";
+import Image from "next/image";
+import { relative } from "path";
 import { Product as ProductModel } from "..";
 
 type Props = {
   product: ProductModel
 }
 
-export default function Product( props: Props){
-  return <h1>{props.product.title}</h1>;
+export default function Product( {product: {title, price, image, rating, category, description}} : Props){
+  return (
+    <>
+      <h1>{title}</h1>
+      <p>{price}</p>
+      <p>{rating.count}, {rating.rate}</p>
+      <p>{category}</p>
+      <p>{description}</p>
+      <AspectRatio position={'relative'} ratio={1} maxWidth='100%' marginBottom={'1rem'}>
+        <Image
+          src={image}
+          alt=""
+          fill={true}
+          style={{
+            objectFit: 'contain',
+          }} 
+        ></Image>
+      </AspectRatio>
+    </>);
 }
 
 // Generates `/products/1` and `/products/2`
