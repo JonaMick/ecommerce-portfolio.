@@ -218,7 +218,6 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
   return {
     props: {
-      products,
       categories,
       productsGroupedByCategory,
     },
