@@ -52,11 +52,8 @@ export default function Home({ categories, productsGroupedByCategory }: Props) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/logo.svg" />
       </Head>
-      <TopBar />
-      <Box marginBottom="2rem">
-        <Header />
-      </Box>
-      <main>
+      
+      <Box as="main" mt={'2rem'}>
         <Container>
           <HomeHeroCategories categories={categories}></HomeHeroCategories>
           <AdvantageSection />
@@ -200,7 +197,7 @@ export default function Home({ categories, productsGroupedByCategory }: Props) {
             </Grid>
           </Flex>
         </Container>
-      </main>
+      </Box>
     </>
   )
 }

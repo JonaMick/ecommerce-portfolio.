@@ -1,6 +1,6 @@
 import type { AppProps } from 'next/app'
 
-import { ChakraProvider } from '@chakra-ui/react'
+import { Box, ChakraProvider } from '@chakra-ui/react'
 
 import { extendTheme } from '@chakra-ui/react'
 
@@ -45,8 +45,20 @@ export const buttonTheme = defineStyleConfig({
   }
 })
 
+const dividerTheme = defineStyleConfig({
+  variants:{
+    bold:{
+      borderWidth: '2px',
+      borderStyle: 'solid',
+      borderColor: 'gray.300'
+    }
+  }
+})
+
 import '@fontsource/spartan/400.css'
 import '@fontsource/spartan/700.css'
+import { Header } from '@/components/Header'
+import { TopBar } from '@/components/TopBar'
 
 
 
@@ -70,6 +82,7 @@ const theme = extendTheme({
   },
   components: {
     Button: buttonTheme,
+    Divider: dividerTheme,
     Container: {
       baseStyle:{
         maxW: '71.375rem',
@@ -80,6 +93,10 @@ const theme = extendTheme({
 
 export default function App({ Component, pageProps }: AppProps) {
   return <ChakraProvider theme={ theme }>
+    <TopBar />
+    <Box>
+      <Header />
+    </Box>
     <Component {...pageProps} />
   </ChakraProvider> 
 }
