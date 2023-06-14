@@ -4,6 +4,7 @@ import { AspectRatio, Box, Button, Container, Divider, Flex, Grid, Heading, Link
 import Image from "next/image";
 import { Product as ProductModel } from "..";
 import { PDPHeader } from "@/components/PDPHeader";
+import { HomeProductsGrid } from '@/components/HomeProductsGrid';
 
 import logo_aes256 from 'public/logo_aes256.png';
 import logo_amex from 'public/logo_amex.png';
@@ -14,7 +15,8 @@ import logo_stripe from 'public/logo_stripe.png';
 import logo_visa from 'public/logo_visa.png';
 
 type Props = {
-  product: ProductModel
+  product: ProductModel;
+  relatedProducts: ProductModel[];
 }
 
 function Price({ price }: {price: number}){
@@ -23,7 +25,7 @@ function Price({ price }: {price: number}){
   return <Text fontSize="xl" fontWeight={'bold'}>{currency}</Text>;
 }
 
-export default function Product( { product} : Props){
+export default function Product( { product, relatedProducts} : Props){
   const {id, title, price, image, rating, category, description} = product;
   const [ showPrice, SetShowPrice ] = useState(false);
   
@@ -33,7 +35,7 @@ export default function Product( { product} : Props){
   return (
     <>
       <PDPHeader product={product} />
-      <Container as={Grid} gridTemplateColumns={'1fr 34.25rem'} mt='2rem' gap='2rem'>
+      <Container as={Grid} gridTemplateColumns={'1fr 34.25rem'} mt='2rem' mb='6rem' gap='2rem'>
         <AspectRatio position='relative' ratio={1} maxWidth='100%' marginBottom={'1rem'}>
           <Image
             src={image}
@@ -86,6 +88,10 @@ export default function Product( { product} : Props){
           <Divider variant='bold'/>
         </Box>
       </Container>
+      <Container>
+        <Heading as="h3" textTransform={'uppercase'} fontSize={'md'} mb='2rem' color="gray.500">Related Products</Heading>
+        <HomeProductsGrid products={relatedProducts}/>
+      </Container>
     </>);
 }
 
@@ -107,13 +113,22 @@ export async function getStaticPaths() {
 
 export async function getStaticProps( context: {params: {slug: string} } ) {
 
-  const id = context.params.slug.split('-').pop();
+  const id = parseInt(context.params.slug.split('-').pop() as string);
 
-  const product = await fetch(`https:fakestoreapi.com/products/${id}`).then((res) => res.json());
+  //const product = await fetch(`https:fakestoreapi.com/products/${id}`).then((res) => res.json());
+  const products: ProductModel[] = await fetch('https://fakestoreapi.com/products').then(res => res.json());
+  const product: ProductModel | undefined = products.find((product: ProductModel) =>{
+    return product.id === id
+  })
 
+  const relatedProducts = products.filter((item: ProductModel)=>{
+    return item.category === product ?.category && item.id !== product ?.id;
+  })
+  console.log(relatedProducts)
   return{
     props: {
-      product
+      product,
+      relatedProducts
     },
   }
 }
