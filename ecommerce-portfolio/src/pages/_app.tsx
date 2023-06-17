@@ -19,16 +19,16 @@ export const buttonTheme = defineStyleConfig({
   },
   sizes:{
     sm:{
-      fontsize: '0.6667rem',
+      fontSize: '0.6667rem',
     },
     md:{
-      fontsize: '0.7222rem',
+      fontSize: '0.7222rem',
     },
     lg:{
-      fontsize: '0.7222rem',
+      fontSize: '0.7222rem',
     },
     xl:{
-      fontsize: '1rem',
+      fontSize: '1rem',
       height: '3.5556rem',
       paddingX: '3rem',
     },
@@ -41,6 +41,15 @@ export const buttonTheme = defineStyleConfig({
     primary:{
       backgroundColor: 'brand.900',
       color: 'white',
+    },
+    danger:{
+      backgroundColor: 'red.500',
+    },
+    outline:{
+      backgroundColor: 'transparent',
+      border: '1px solid',
+      color: 'white',
+      padding: '0 1.5rem'
     }
   }
 })
@@ -59,6 +68,7 @@ import '@fontsource/spartan/400.css'
 import '@fontsource/spartan/700.css'
 import { Header } from '@/components/Header'
 import { TopBar } from '@/components/TopBar'
+import { Footer } from '@/components/Footer'
 
 
 
@@ -98,5 +108,6 @@ export default function App({ Component, pageProps }: AppProps) {
       <Header />
     </Box>
     <Component {...pageProps} />
+    <Footer />
   </ChakraProvider> 
 }

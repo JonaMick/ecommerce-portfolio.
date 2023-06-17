@@ -6,6 +6,7 @@ import { slugify } from "@/utils/sluglify";
 import { CenteredLabel } from "./CenteredLabel";
 
 import { Categories } from "@/models/Categories";
+import Link from 'next/link';
 
 type Props = {
   categories: Categories[]
@@ -44,7 +45,10 @@ export function HomeHeroCategories({ categories }: Props) {
           gridArea: `cat${index + 1}`
         };
   
-        return <GridItem fontSize={{
+        return <GridItem
+        as={Link} 
+        href={`/category/${cat}`}
+        fontSize={{
           base: '0.85rem',
           sm: '1rem'
         }} position='relative' w='100%' height='100%' gridArea={`cat${index + 1}`} key={index}>
